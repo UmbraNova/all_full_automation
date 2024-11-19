@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+</head>
+<body>
+    <h1>Upload Files</h1>
+    <form id="uploadForm" enctype="multipart/form-data" method="POST">
+        <label for="file1">Upload File 1:</label>
+        <input type="file" id="file1" name="file1" required><br><br>
+
+        <label for="file2">Upload File 2:</label>
+        <input type="file" id="file2" name="file2" required><br><br>
+
+        <label for="file3">Upload File 3:</label>
+        <input type="file" id="file3" name="file3" required><br><br>
+
+        <label for="file4">Upload File 4:</label>
+        <input type="file" id="file4" name="file4" required><br><br>
+
+        <label for="zipFile">Upload Zip Folder:</label>
+        <input type="file" id="zipFile" name="zipFile" accept=".zip" required><br><br>
+
+        <button type="submit">Upload Files</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault()
+            
+            let formData = new FormData()
+            formData.append("file1", document.getElementById("file1").files[0])
+            formData.append("file2", document.getElementById("file2").files[0])
+            formData.append("file3", document.getElementById("file3").files[0])
+            formData.append("file4", document.getElementById("file4").files[0])
+            formData.append("zipFile", document.getElementById("zipFile").files[0])
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Files uploaded successfully!')
+            })
+            .catch(error => {
+                alert('Error uploading files.')
+            })
+        })
+    </script>
+</body>
+</html>
